@@ -16,3 +16,5 @@ jobs:
     steps:
       - name: Show user information
         run: whoami
+    env:
+      DEMO_SECRET: ${{ secrets.DEMO_SECRET }}
