@@ -1,9 +1,5 @@
 name: Hello GitHub Actions
 on:
-  push:
-    branches:
-      - main
-on:
   workflow_dispatch:
 jobs:
   hello:
