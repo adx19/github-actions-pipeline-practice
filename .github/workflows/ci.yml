@@ -1,5 +1,9 @@
 name: Hello GitHub Actions
 on:
+  push:
+    branches:
+      - main
+on:
   workflow_dispatch:
 jobs:
   hello:
@@ -16,5 +20,16 @@ jobs:
     steps:
       - name: Show user information
         run: whoami
-    env:
-      DEMO_SECRET: ${{ secrets.DEMO_SECRET }}
+  secrets-demo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check secret
+        env:
+          DEMO_SECRET: ${{ secrets.DEMO_SECRET }}
+        run: |
+          if [ -n "$DEMO_SECRET" ]; then
+            echo "Secret is available."
+          else
+            echo "Secret is not configured."
+            exit 1
+          fi
