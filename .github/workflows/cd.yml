@@ -1,0 +1,32 @@
+name: Python CD Pipeline
+
+on:
+  workflow_run:
+    workflows: ["Python CI Pipeline"]
+    types:
+      - completed
+jobs:
+  deploy:
+    name: Build and Push Docker Image
+    if: ${{github.event.workflow_run.conclusion == 'success'}}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build Docker Image
+        run: |
+          docker build -t ${{ secrests.DOCKERHUB_USERNAME }}/calculator:latest .
+      - name: Push Docker Image
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/calculator:latest
+
+
+         
