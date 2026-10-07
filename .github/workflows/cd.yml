@@ -23,7 +23,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build Docker Image
         run: |
-          docker build -t ${{ secrests.DOCKERHUB_USERNAME }}/calculator:latest .
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/calculator:latest .
       - name: Push Docker Image
         run: |
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/calculator:latest
